@@ -1,6 +1,11 @@
-# Mindhive AI Assistant Frontend
+# ChatBot AI Assistant Frontend
 
-A modern React-based chat interface for the Mindhive AI Assistant, helping users find ZUS Coffee outlets, explore products, and perform calculations.
+A modern React-based chat interface for the ChatBot AI Assistant, helping users find ZUS Coffee outlets, explore products, and perform calculations.
+
+---
+
+## 🚀 Live Demo
+[**View Live App**](https://chatbot-ai-two-red.vercel.app/)  
 
 ---
 
