@@ -13,7 +13,7 @@ const App = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
-  const API_BASE = 'http://localhost:8000';
+  const API_BASE = import.meta.env.VITE_API_BACKEND_RENDER || 'http://localhost:8000';
 
   const QUICK_COMMANDS = [
     { cmd: '/calc', desc: 'Calculate expression', example: '/calc 15 + 25 * 2', icon: Calculator },
@@ -25,7 +25,7 @@ const App = () => {
   useEffect(() => {
     loadConversation();
     checkApiHealth();
-    addMessage('bot', '👋 Hello! I\'m the Mindhive AI assistant. I can help you with:\n\n• Finding ZUS Coffee outlets\n• Product information and drinkware\n• Calculations\n• Store hours and locations\n\n💡 **Quick commands:** Type `/` to see available commands', {}, false);
+    addMessage('bot', '👋 Hello! I\'m the ChatBot AI assistant. I can help you with:\n\n• Finding ZUS Coffee outlets\n• Product information and drinkware\n• Calculations\n• Store hours and locations\n\n💡 **Quick commands:** Type `/` to see available commands', {}, false);
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ const App = () => {
 
   const loadConversation = () => {
     try {
-      const saved = localStorage.getItem('mindhive_conversation');
+      const saved = localStorage.getItem('ChatBot_conversation');
       if (saved) {
         const data = JSON.parse(saved);
         if (data.userId === userId) {
@@ -59,7 +59,7 @@ const App = () => {
 
   const saveConversation = () => {
     try {
-      localStorage.setItem('mindhive_conversation', JSON.stringify({
+      localStorage.setItem('ChatBot_conversation', JSON.stringify({
         userId,
         messages,
         timestamp: new Date().toISOString()
@@ -238,7 +238,7 @@ const App = () => {
   const handleReset = () => {
     setMessages([]);
     setAgentActivity([]);
-    localStorage.removeItem('mindhive_conversation');
+    localStorage.removeItem('ChatBot_conversation');
     addMessage('bot', '🔄 Conversation reset. How can I help you today?');
   };
 
@@ -278,7 +278,7 @@ const App = () => {
                   <Coffee className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-xl font-bold text-gray-800">Mindhive AI Assistant</h1>
+                  <h1 className="text-xl font-bold text-gray-800">ChatBot AI Assistant</h1>
                   <p className="text-sm text-gray-600">ZUS Coffee Helper • Part 1-6 Complete</p>
                 </div>
               </div>
