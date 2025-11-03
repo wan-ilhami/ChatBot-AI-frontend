@@ -8,7 +8,7 @@ const App = () => {
   const [userId] = useState(`user_${Date.now()}`);
   const [apiStatus, setApiStatus] = useState({ chat: 'unknown', products: 'unknown', outlets: 'unknown' });
   const [showCommands, setShowCommands] = useState(false);
-  const [showAgentPanel, setShowAgentPanel] = useState(true);
+  const [showAgentPanel, setShowAgentPanel] = useState(false);
   const [agentActivity, setAgentActivity] = useState([]);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -266,50 +266,37 @@ const App = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-amber-50 to-orange-50">
+    <div className="flex h-screen bg-gradient-to-br from-amber-50 to-orange-50 overflow-hidden">
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Header */}
         <div className="bg-white shadow-md border-b border-amber-200">
-          <div className="max-w-4xl mx-auto px-4 py-4">
+          <div className="max-w-4xl mx-auto px-3 sm:px-4 py-3 sm:py-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-2 rounded-lg">
-                  <Coffee className="w-6 h-6 text-white" />
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1">
+                <div className="bg-gradient-to-br from-amber-500 to-orange-600 p-1.5 sm:p-2 rounded-lg flex-shrink-0">
+                  <Coffee className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
-                <div>
-                  <h1 className="text-xl font-bold text-gray-800">ChatBot AI Assistant</h1>
-                  <p className="text-sm text-gray-600">ZUS Coffee Helper • Part 1-6 Complete</p>
+                <div className="min-w-0 flex-1">
+                  <h1 className="text-base sm:text-xl font-bold text-gray-800 truncate">ChatBot AI</h1>
+                  <p className="text-xs sm:text-sm text-gray-600 truncate hidden sm:block">ZUS Coffee Helper • Part 1-6 Complete</p>
+                  <p className="text-xs text-gray-600 truncate sm:hidden">ZUS Coffee</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="flex flex-col gap-1 text-xs">
-                  <div className="flex items-center gap-2">
-                    <StatusIndicator status={apiStatus.chat} />
-                    <span className="text-gray-600">Chat</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <StatusIndicator status={apiStatus.products} />
-                    <span className="text-gray-600">Products</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <StatusIndicator status={apiStatus.outlets} />
-                    <span className="text-gray-600">Outlets</span>
-                  </div>
-                </div>
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                 <button
                   onClick={handleReset}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   title="Reset conversation"
                 >
-                  <RotateCcw className="w-5 h-5 text-gray-600" />
+                  <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
                 </button>
                 <button
                   onClick={() => setShowAgentPanel(!showAgentPanel)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-1.5 sm:p-2 hover:bg-gray-100 rounded-lg transition-colors"
                   title="Toggle agent panel"
                 >
-                  <Zap className={`w-5 h-5 ${showAgentPanel ? 'text-amber-600' : 'text-gray-600'}`} />
+                  <Zap className={`w-4 h-4 sm:w-5 sm:h-5 ${showAgentPanel ? 'text-amber-600' : 'text-gray-600'}`} />
                 </button>
               </div>
             </div>
@@ -317,22 +304,22 @@ const App = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-4 py-6">
-          <div className="max-w-4xl mx-auto space-y-4">
+        <div className="flex-1 overflow-y-auto px-3 sm:px-4 py-4 sm:py-6">
+          <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4">
             {messages.map((msg) => (
               <div
                 key={msg.id}
-                className={`flex gap-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex gap-2 sm:gap-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {msg.sender === 'bot' && (
-                  <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center">
-                    <Bot className="w-5 h-5 text-white" />
+                  <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center">
+                    <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
                 )}
                 
-                <div className={`flex flex-col gap-1 max-w-2xl ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
+                <div className={`flex flex-col gap-1 max-w-[85%] sm:max-w-2xl ${msg.sender === 'user' ? 'items-end' : 'items-start'}`}>
                   <div
-                    className={`px-4 py-3 rounded-2xl ${
+                    className={`px-3 sm:px-4 py-2 sm:py-3 rounded-2xl ${
                       msg.sender === 'user'
                         ? 'bg-gradient-to-br from-amber-500 to-orange-600 text-white'
                         : msg.error
@@ -340,7 +327,7 @@ const App = () => {
                         : 'bg-white text-gray-800 shadow-sm border border-gray-200'
                     }`}
                   >
-                    <p className="whitespace-pre-wrap">{msg.content}</p>
+                    <p className="whitespace-pre-wrap text-sm sm:text-base">{msg.content}</p>
                     
                     {msg.tools && msg.tools.length > 0 && (
                       <div className="mt-2 pt-2 border-t border-gray-200 flex flex-wrap gap-1">
@@ -366,22 +353,22 @@ const App = () => {
                 </div>
 
                 {msg.sender === 'user' && (
-                  <div className="flex-shrink-0 w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
-                    <User className="w-5 h-5 text-gray-600" />
+                  <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                    <User className="w-4 h-4 sm:w-5 sm:h-5 text-gray-600" />
                   </div>
                 )}
               </div>
             ))}
             
             {isLoading && (
-              <div className="flex gap-3 justify-start">
-                <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center">
-                  <Bot className="w-5 h-5 text-white" />
+              <div className="flex gap-2 sm:gap-3 justify-start">
+                <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full flex items-center justify-center">
+                  <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
-                <div className="px-4 py-3 rounded-2xl bg-white shadow-sm border border-gray-200">
+                <div className="px-3 sm:px-4 py-2 sm:py-3 rounded-2xl bg-white shadow-sm border border-gray-200">
                   <div className="flex items-center gap-2">
                     <Loader2 className="w-4 h-4 animate-spin text-amber-600" />
-                    <span className="text-gray-600">Processing...</span>
+                    <span className="text-sm sm:text-base text-gray-600">Processing...</span>
                   </div>
                 </div>
               </div>
@@ -393,21 +380,21 @@ const App = () => {
 
         {/* Quick Actions */}
         {messages.length <= 1 && (
-          <div className="px-4 py-3 bg-white border-t border-gray-200">
+          <div className="px-3 sm:px-4 py-2 sm:py-3 bg-white border-t border-gray-200">
             <div className="max-w-4xl mx-auto">
-              <p className="text-sm text-gray-600 mb-3 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4" />
+              <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 flex items-center gap-2">
+                <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
                 Quick actions:
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {quickActions.map((action, idx) => (
                   <button
                     key={idx}
                     onClick={() => setInput(action.message)}
-                    className="flex items-center gap-2 px-3 py-2 bg-amber-50 hover:bg-amber-100 rounded-lg transition-colors text-sm text-gray-700 border border-amber-200"
+                    className="flex items-center gap-2 px-2 sm:px-3 py-2 bg-amber-50 hover:bg-amber-100 rounded-lg transition-colors text-xs sm:text-sm text-gray-700 border border-amber-200"
                   >
-                    <action.icon className="w-4 h-4 text-amber-600" />
-                    <span>{action.label}</span>
+                    <action.icon className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600 flex-shrink-0" />
+                    <span className="truncate">{action.label}</span>
                   </button>
                 ))}
               </div>
@@ -417,7 +404,7 @@ const App = () => {
 
         {/* Command Autocomplete */}
         {showCommands && (
-          <div className="px-4 pb-2">
+          <div className="px-3 sm:px-4 pb-2">
             <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg border border-gray-200 p-2">
               {QUICK_COMMANDS.filter(cmd => 
                 cmd.cmd.toLowerCase().startsWith(input.toLowerCase().split(' ')[0])
@@ -425,14 +412,14 @@ const App = () => {
                 <button
                   key={idx}
                   onClick={() => insertCommand(cmd)}
-                  className="w-full flex items-center gap-3 px-3 py-2 hover:bg-gray-50 rounded text-left"
+                  className="w-full flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-2 hover:bg-gray-50 rounded text-left"
                 >
-                  <cmd.icon className="w-4 h-4 text-amber-600" />
-                  <div className="flex-1">
-                    <div className="font-mono text-sm font-semibold text-gray-800">{cmd.cmd}</div>
-                    <div className="text-xs text-gray-500">{cmd.desc}</div>
+                  <cmd.icon className="w-3 h-3 sm:w-4 sm:h-4 text-amber-600 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="font-mono text-xs sm:text-sm font-semibold text-gray-800">{cmd.cmd}</div>
+                    <div className="text-xs text-gray-500 truncate">{cmd.desc}</div>
                   </div>
-                  <div className="text-xs text-gray-400">{cmd.example}</div>
+                  <div className="text-xs text-gray-400 hidden sm:block">{cmd.example}</div>
                 </button>
               ))}
             </div>
@@ -440,22 +427,22 @@ const App = () => {
         )}
 
         {/* Input */}
-        <div className="bg-white border-t border-gray-200 px-4 py-4 shadow-lg">
+        <div className="bg-white border-t border-gray-200 px-3 sm:px-4 py-3 sm:py-4 shadow-lg">
           <div className="max-w-4xl mx-auto">
-            <div className="flex gap-3 items-end">
+            <div className="flex gap-2 sm:gap-3 items-end">
               <div className="flex-1 relative">
                 <textarea
                   ref={inputRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Ask about outlets, products, or calculations... (Type / for commands)"
+                  placeholder="Ask about outlets, products..."
                   rows={1}
-                  className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none"
-                  style={{ minHeight: '48px', maxHeight: '120px' }}
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 pr-10 sm:pr-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent resize-none text-sm sm:text-base"
+                  style={{ minHeight: '42px', maxHeight: '120px' }}
                 />
                 {input.startsWith('/') && (
-                  <div className="absolute right-3 top-3 text-xs text-amber-600 font-mono">
+                  <div className="absolute right-2 sm:right-3 top-2 sm:top-3 text-xs text-amber-600 font-mono">
                     CMD
                   </div>
                 )}
@@ -463,29 +450,32 @@ const App = () => {
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isLoading}
-                className="flex-shrink-0 bg-gradient-to-br from-amber-500 to-orange-600 text-white p-3 rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
+                className="flex-shrink-0 bg-gradient-to-br from-amber-500 to-orange-600 text-white p-2 sm:p-3 rounded-xl hover:from-amber-600 hover:to-orange-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-md"
               >
-                <Send className="w-5 h-5" />
+                <Send className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             </div>
             
             {apiStatus.chat === 'offline' && (
-              <div className="mt-3 flex items-center gap-2 text-sm text-red-600">
-                <AlertCircle className="w-4 h-4" />
-                <span>Backend is offline. Make sure FastAPI is running on {API_BASE}</span>
+              <div className="mt-2 sm:mt-3 flex items-center gap-2 text-xs sm:text-sm text-red-600">
+                <AlertCircle className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                <span className="truncate">Backend offline - Check {API_BASE}</span>
               </div>
             )}
 
-            <div className="mt-2 text-xs text-gray-500">
+            <div className="mt-2 text-xs text-gray-500 hidden sm:block">
               💡 Press Enter to send • Shift+Enter for newline • Type / for commands
+            </div>
+            <div className="mt-1 text-xs text-gray-500 sm:hidden">
+              💡 Enter to send • / for commands
             </div>
           </div>
         </div>
       </div>
 
-      {/* Agent Activity Panel */}
+      {/* Agent Activity Panel - Desktop/Tablet Only */}
       {showAgentPanel && (
-        <div className="w-80 bg-white border-l border-gray-200 flex flex-col">
+        <div className="hidden md:flex w-80 bg-white border-l border-gray-200 flex-col">
           <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Zap className="w-5 h-5 text-amber-600" />
@@ -546,6 +536,51 @@ const App = () => {
                 <div className="w-2 h-2 rounded-full bg-red-500" />
                 <span>Error</span>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Agent Activity Modal */}
+      {showAgentPanel && (
+        <div className="md:hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end">
+          <div className="bg-white w-full rounded-t-2xl max-h-[70vh] flex flex-col">
+            <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Zap className="w-5 h-5 text-amber-600" />
+                <h3 className="font-semibold text-gray-800">Agent Activity</h3>
+              </div>
+              <button
+                onClick={() => setShowAgentPanel(false)}
+                className="p-1 hover:bg-gray-100 rounded"
+              >
+                <X className="w-5 h-5 text-gray-500" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto p-4 space-y-3">
+              {agentActivity.length === 0 ? (
+                <div className="text-center text-gray-500 text-sm py-8">
+                  <Zap className="w-8 h-8 mx-auto mb-2 opacity-20" />
+                  <p>Agent activity will appear here during processing</p>
+                </div>
+              ) : (
+                agentActivity.map((activity) => (
+                  <div key={activity.id} className="flex gap-2 items-start">
+                    <div className={`flex-shrink-0 w-2 h-2 rounded-full mt-1.5 ${
+                      activity.type === 'error' ? 'bg-red-500' :
+                      activity.type === 'success' ? 'bg-green-500' :
+                      activity.type === 'tool' ? 'bg-blue-500' :
+                      activity.type === 'api' ? 'bg-purple-500' :
+                      'bg-amber-500'
+                    }`} />
+                    <div className="flex-1">
+                      <p className="text-sm text-gray-700">{activity.text}</p>
+                      <p className="text-xs text-gray-400">{activity.timestamp}</p>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
